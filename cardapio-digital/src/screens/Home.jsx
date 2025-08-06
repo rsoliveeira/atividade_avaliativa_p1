@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 
-export default function Home({navigation}) {
+export default function HomeScreen({navigation}) {
     const categorias = ['Entradas', 'Pratos Principais', 'Sobremesas', 'Bebidas'];
     return (
         <View style={styles.container}>
