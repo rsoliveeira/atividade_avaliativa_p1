@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../screens/Home";
 import CategoriaProduto from "../screens/CategoriaProduto";
-import DetalhesProduto from "../screens/DetalhesProduto";
 
 const Stack = createNativeStackNavigator();
 export function AppNavigation() {
