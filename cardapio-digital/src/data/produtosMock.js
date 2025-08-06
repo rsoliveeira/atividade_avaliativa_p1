@@ -1,3 +1,4 @@
+
 export const produtosMock = [
     {
         id: 1,
@@ -10,7 +11,7 @@ export const produtosMock = [
         disponibilidade: true,
         ingredientes: ['Frango', 'Massa', 'Temperos'],
         preparo: 'Fritar até dourar',
-        imagem: "https://example.com/coxinha.jpg"
+        imagem: require('../assets/images/coxinha.jpg') // Use require para imagens locais
     },
     {
         id: 2,
