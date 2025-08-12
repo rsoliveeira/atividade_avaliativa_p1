@@ -11,7 +11,9 @@ export const produtosMock = [
         disponibilidade: true,
         ingredientes: ['Frango', 'Massa', 'Temperos'],
         preparo: 'Fritar até dourar',
-        imagem: require('../assets/images/coxinha.jpg') // Use require para imagens locais
+        alergenicos: ['Glúten', 'Lactose'],
+        preparoDetalhado: 'Preparar o recheio de frango, moldar a massa, empanar e fritar em óleo quente por 5 minutos até dourar.',
+        imagem: require('../assets/images/coxinha.jpg')
     },
     {
         id: 2,
@@ -24,7 +26,9 @@ export const produtosMock = [
         disponibilidade: true,
         ingredientes: ['Picanha', 'Sal', 'Pimenta'],
         preparo: 'Grelhar na churrasqueira por 15 minutos de cada lado',
-        imagem: "https://example.com/picanha.jpg"
+        alergenicos: ['Nenhum'],
+        preparoDetalhado: 'Temperar a picanha com sal e pimenta, grelhar na churrasqueira por 15 minutos de cada lado até atingir o ponto desejado.',
+        imagem: require('../assets/images/picanha.jpg')
     },
     {
         id: 3,
@@ -37,7 +41,9 @@ export const produtosMock = [
         disponibilidade: true,
         ingredientes: ['Limão', 'Merengue', 'Massa'],
         preparo: 'Assar a massa, preparar o recheio de limão e cobrir com merengue',
-        imagem: "https://example.com/torta-limao.jpg"
+        alergenicos: ['Glúten', 'Lactose'],
+        preparoDetalhado: 'Preparar a base da torta com farinha e manteiga, assar até dourar, preparar o recheio de limão com suco e açúcar, cobrir com merengue e levar ao forno por 10 minutos.',
+        imagem: require('../assets/images/tortalimao.jpg')
     },
     {
         id: 4,
@@ -50,6 +56,8 @@ export const produtosMock = [
         disponibilidade: true,
         ingredientes: ['Limão', 'Cachaça', 'Açúcar', 'Gelo'],
         preparo: 'Misturar limão picado com açúcar, adicionar cachaça e gelo',
-        imagem: "https://example.com/caipirinha.jpg"
+        alergenicos: ['Nenhum'],
+        preparoDetalhado: 'Cortar o limão em pedaços, misturar com açúcar até dissolver, adicionar cachaça e gelo a gosto, mexer bem e servir gelado.',
+        imagem: require('../assets/images/caipirinha-limao.jpg')
     }
     ];
