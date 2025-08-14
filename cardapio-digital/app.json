@@ -4,7 +4,6 @@
     "slug": "cardapio-digital",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
     "scheme": "cardapiodigital",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

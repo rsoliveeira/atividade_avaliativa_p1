@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "nome": "Coxinha",
+    "descricao": "Coxinha de frango com massa crocante",
+    "preco": 12.5,
+    "categoria": "Entradas",
+    "tipo": "Salgado",
+    "tamanho": "Médio",
+    "disponibilidade": true,
+    "ingredientes": "Frango",
+    "preparo": "Fritar até dourar",
+    "alergenicos": "Glúten",
+    "preparoDetalhado": "Preparar o recheio de frango, moldar a massa,  empanare fritar em óleo quente por 5 minutos até dourar.",
+    "imagem": "require('../assets/images/coxinha.jpg')"
+  }
+]
