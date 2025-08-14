@@ -1,4 +1,4 @@
-const {readProdutos, writeProdutos} = require('../models/produtoModel');
+const {readProdutos, createProduto} = require('../models/produtoModel');
 
 const listarProdutos = (req, res) => {	
     try {
@@ -10,23 +10,18 @@ const listarProdutos = (req, res) => {
 }
 
 const criarProduto = (req, res) => {
-    try {
-        const produtos = readProdutos();
-        const novoProduto = req.body;
-        
-        // Validação simples
-        if (!novoProduto.nome || !novoProduto.preco) {
-            return res.status(400).json({ message: 'Nome e preço são obrigatórios' });
-        }
-
-        // Adiciona o novo produto
-        produtos.push(novoProduto);
-        writeProdutos(produtos);
-        
-        res.status(201).json(novoProduto);
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao criar produto', error: error.message });
+    const {nome, descricao, preco, categoria, tipo, tamanho, disponibilidade, ingredientes, preparo, alergenicos, preparoDetalhado, imagem} = req.body || {};
+    if (!nome || !descricao || !preco || !categoria || !tipo || !tamanho || !disponibilidade || !ingredientes || !preparo || !alergenicos || !preparoDetalhado) {
+        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
+    if( typeof preco !== 'number' || preco < 0) {
+        return res.status(400).json({ message: 'Preço inválido.' });
+    }
+    const produtos = createProduto(nome, descricao, preco, categoria, tipo, tamanho, disponibilidade, ingredientes, preparo, alergenicos, preparoDetalhado, imagem);
+    if (!produtos) {
+        return res.status(500).json({ message: 'Erro ao criar produto.' });
+    }
+   return res.status(201).json(produtos);
 }
 
 module.exports = {
