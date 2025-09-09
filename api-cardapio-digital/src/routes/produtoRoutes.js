@@ -9,7 +9,6 @@ import {
 
 const router = Router();
 
-// Principais rotas solicitadas
 router.get('/', getAllProducts);        // GET /products
 router.get('/:id', getProductById);     // GET /products/:id (com validações)
 
