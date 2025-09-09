@@ -1,8 +1,13 @@
-import React from "react";
-import {AppNavigation} from "./src/navigation/AppNavigation";
+
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native';
+import ProductsScreen from './src/screens/ProductsScreen';
 
 export default function App() {
   return (
-      <AppNavigation />
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar style="auto" />
+      <ProductsScreen />
+    </SafeAreaView>
   );
 }
