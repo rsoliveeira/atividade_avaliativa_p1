@@ -1,5 +1,5 @@
-// src/screens/ProductsScreen.js
-import React from 'react';
+// ajuste: adiciona campo de pesquisa (nome ou ID) e usa o hook com 'search'
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,14 +9,15 @@ import {
   RefreshControl,
   StyleSheet,
   Button,
+  TextInput,
 } from 'react-native';
 import { useProducts } from '../hooks/useProducts';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductsScreen() {
-  const { items, loading, error, reload } = useProducts();
+  const [search, setSearch] = useState('');
+  const { items, loading, error, reload } = useProducts(search);
 
-  // Carregamento inicial
   if (loading && items.length === 0) {
     return (
       <SafeAreaView style={styles.containerCenter}>
@@ -26,7 +27,6 @@ export default function ProductsScreen() {
     );
   }
 
-  // Erro inicial (sem dados)
   if (error && items.length === 0) {
     return (
       <SafeAreaView style={styles.containerCenter}>
@@ -47,7 +47,6 @@ export default function ProductsScreen() {
     );
   }
 
-  // Lista de produtos
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -55,7 +54,23 @@ export default function ProductsScreen() {
         <Button title="Recarregar" onPress={reload} />
       </View>
 
-      {/* Se houver erro durante um refresh, mas já temos dados, mostra um aviso */}
+      {/* ajuste: campo de pesquisa por nome ou ID (lista somente o correspondente) */}
+      <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
+        <TextInput
+          style={{
+            backgroundColor: '#fff',
+            padding: 10,
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: '#ddd',
+          }}
+          placeholder="Pesquisar por nome ou ID"
+          value={search}
+          onChangeText={setSearch}
+          autoCapitalize="none"
+        />
+      </View>
+
       {!!error && items.length > 0 && (
         <View style={styles.bannerError}>
           <Text style={styles.bannerErrorText}>{error}</Text>
@@ -66,17 +81,13 @@ export default function ProductsScreen() {
         data={items}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => <ProductCard product={item} />}
-        contentContainerStyle={
-          items.length === 0 ? styles.listEmpty : styles.list
-        }
+        contentContainerStyle={items.length === 0 ? styles.listEmpty : styles.list}
         ListEmptyComponent={
           <View style={{ alignItems: 'center', padding: 24 }}>
-            <Text>Nenhum produto cadastrado.</Text>
+            <Text>Nenhum produto encontrado.</Text>
           </View>
         }
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={reload} />
-        }
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={reload} />}
       />
     </SafeAreaView>
   );
