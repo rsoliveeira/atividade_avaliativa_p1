@@ -1,13 +1,27 @@
 import DataService from '../services/DataService.js';
 import Product from '../models/produtoModel.js';
-import { isPositiveInt, normalizeSku, validateNewProductPayload, validateUpdateProductPayload } from '../utils/validators.js';
+import {
+  isPositiveInt,
+  normalizeSku,
+  validateNewProductPayload,
+  validateUpdateProductPayload,
+} from '../utils/validators.js';
 
 const dataService = new DataService();
 
 /** GET /products */
 export const getAllProducts = async (req, res) => {
   const products = await dataService.readAll();
-  return res.json({ success: true, data: products });
+
+  // ajuste: filtro por nome (?name=) - case-insensitive
+  const { name } = req.query;
+  let filtered = products;
+  if (name) {
+    const lower = String(name).toLowerCase();
+    filtered = products.filter((p) => String(p.name).toLowerCase().includes(lower));
+  }
+
+  return res.json({ success: true, data: filtered });
 };
 
 /** GET /products/:id */
@@ -42,19 +56,18 @@ export const createProduct = async (req, res) => {
   }
 
   const products = await dataService.readAll();
-  const id = Number(req.body.id);
   const skuNorm = normalizeSku(req.body.sku);
 
-  // Regras de negócio
-  if (products.some((p) => p.id === id)) {
-    return res.status(409).json({ success: false, message: 'Já existe produto com este ID.' });
-  }
+  // ajuste: garantir unicidade de SKU
   if (products.some((p) => normalizeSku(p.sku) === skuNorm)) {
     return res.status(409).json({ success: false, message: 'Já existe produto com este SKU.' });
   }
 
+  // ajuste: gerar id automaticamente (auto-increment lógico: max(id) + 1)
+  const nextId = products.length > 0 ? Math.max(...products.map((p) => p.id)) + 1 : 1;
+
   const newProduct = new Product({
-    id,
+    id: nextId,
     name: req.body.name,
     price: req.body.price,
     sku: skuNorm,
@@ -89,7 +102,7 @@ export const updateProduct = async (req, res) => {
     return res.status(404).json({ success: false, message: 'Produto não encontrado.' });
   }
 
-  // Se alterar SKU, manter unicidade (case-insensitive)
+  // ajuste: manter unicidade de SKU ao atualizar
   if (req.body.sku !== undefined) {
     const newSkuNorm = normalizeSku(req.body.sku);
     const dupSku = products.some(
